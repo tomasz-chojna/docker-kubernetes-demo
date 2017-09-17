@@ -1,0 +1,28 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: docker-kubernetes
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: docker-kubernetes
+    spec:
+      containers:
+      - name: docker-kubernetes
+        image: codeidea/docker-kubernetes:0.0.1
+        ports:
+        - containerPort: 5000
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 3
+          periodSeconds: 3
